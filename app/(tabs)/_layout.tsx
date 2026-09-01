@@ -61,6 +61,14 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => <Ionicons name="heart-outline" size={size} color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="more"
+        options={{
+          headerShown: false,
+          title: "その他",
+          tabBarIcon: ({ color, size }) => <Ionicons name="grid-outline" size={size} color={color} />,
+        }}
+      />
     </Tabs>
   );
 }

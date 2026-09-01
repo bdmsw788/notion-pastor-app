@@ -17,6 +17,7 @@ import { colors, spacing } from "@/lib/theme";
 import { formatDate } from "@/lib/dateUtils";
 
 const TYPE_OPTIONS = ["正会員", "準会員", "求道者", "未会員"] as const;
+const STATUS_OPTIONS = ["順調", "要フォロー", "入院中", "長期欠席", "その他"] as const;
 
 export default function MemberDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -34,6 +35,7 @@ export default function MemberDetailScreen() {
   const [contact, setContact] = useState("");
   const [baptismDate, setBaptismDate] = useState("");
   const [memberType, setMemberType] = useState<Member["memberType"]>("求道者");
+  const [status, setStatus] = useState<Member["status"]>("順調");
   const [note, setNote] = useState("");
   const [hydrated, setHydrated] = useState(isNew);
 
@@ -45,6 +47,7 @@ export default function MemberDetailScreen() {
       setContact(existing.contact);
       setBaptismDate(existing.baptismDate ?? "");
       setMemberType(existing.memberType);
+      setStatus(existing.status);
       setNote(existing.note);
       setHydrated(true);
     }
@@ -70,6 +73,7 @@ export default function MemberDetailScreen() {
       連絡先: pRichText(contact),
       洗礼日: pDate(baptismDate || null),
       会員種別: pSelect(memberType),
+      状況: pSelect(status),
       備考: pRichText(note),
     };
   }
@@ -114,6 +118,7 @@ export default function MemberDetailScreen() {
       <FormField label="氏名" value={name} onChangeText={setName} placeholder="例: 山田 太郎" />
       <FormField label="フリガナ" value={kana} onChangeText={setKana} placeholder="例: ヤマダ タロウ" />
       <SelectField label="会員種別" options={TYPE_OPTIONS} value={memberType} onChange={setMemberType} />
+      <SelectField label="状況" options={STATUS_OPTIONS} value={status} onChange={setStatus} />
       <FormField label="家族" value={family} onChangeText={setFamily} placeholder="例: 配偶者・子2人" />
       <FormField label="連絡先" value={contact} onChangeText={setContact} placeholder="電話番号・メールなど" />
       <DateField label="洗礼日" value={baptismDate} onChange={setBaptismDate} />

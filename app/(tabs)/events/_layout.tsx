@@ -12,6 +12,7 @@ export default function EventsLayout() {
     >
       <Stack.Screen name="index" options={{ title: "行事" }} />
       <Stack.Screen name="[id]" options={{ title: "行事" }} />
+      <Stack.Screen name="duty/[id]" options={{ title: "奉仕表" }} />
     </Stack>
   );
 }

@@ -33,6 +33,7 @@ export const DB_DEFINITIONS: DbDefinition[] = [
       連絡先: { rich_text: {} },
       洗礼日: { date: {} },
       会員種別: selectProp(["正会員", "準会員", "求道者", "未会員"]),
+      状況: selectProp(["順調", "要フォロー", "入院中", "長期欠席", "その他"]),
       備考: { rich_text: {} },
     },
   },
@@ -62,6 +63,17 @@ export const DB_DEFINITIONS: DbDefinition[] = [
     },
   },
   {
+    key: "duties",
+    title: "奉仕表",
+    properties: {
+      タイトル: { title: {} },
+      日付: { date: {} },
+      役割: selectProp(["司会", "奏楽", "受付", "音響", "こども担当", "清掃", "その他"]),
+      担当者: { rich_text: {} },
+      備考: { rich_text: {} },
+    },
+  },
+  {
     key: "prayers",
     title: "祈祷課題",
     properties: {
@@ -81,6 +93,26 @@ export const DB_DEFINITIONS: DbDefinition[] = [
       種別: selectProp(["礼拝献金", "十一献金", "感謝献金", "特別献金", "その他"]),
       金額: { number: {} },
       メモ: { rich_text: {} },
+    },
+  },
+  {
+    key: "minutes",
+    title: "議事録",
+    properties: {
+      タイトル: { title: {} },
+      日付: { date: {} },
+      出席者: { rich_text: {} },
+      内容: { rich_text: {} },
+      決定事項: { rich_text: {} },
+    },
+  },
+  {
+    key: "churchInfo",
+    title: "教会情報",
+    properties: {
+      タイトル: { title: {} },
+      ビジョン: { rich_text: {} },
+      沿革: { rich_text: {} },
     },
   },
 ];

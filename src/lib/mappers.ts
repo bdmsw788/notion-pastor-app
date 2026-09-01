@@ -3,6 +3,9 @@ import { rCheckbox, rDate, rNumber, rRichText, rSelect, rTitle } from "./notion"
 import type {
   CareLog,
   ChurchEvent,
+  ChurchInfo,
+  DutyAssignment,
+  MeetingMinutes,
   Member,
   Offering,
   PrayerRequest,
@@ -32,6 +35,7 @@ export function toMember(p: RawNotionPage): Member {
     contact: rRichText(pr["連絡先"]),
     baptismDate: rDate(pr["洗礼日"]),
     memberType: (rSelect(pr["会員種別"]) as Member["memberType"]) ?? "未会員",
+    status: (rSelect(pr["状況"]) as Member["status"]) ?? "順調",
     note: rRichText(pr["備考"]),
   };
 }
@@ -84,5 +88,37 @@ export function toOffering(p: RawNotionPage): Offering {
     kind: (rSelect(pr["種別"]) as Offering["kind"]) ?? "その他",
     amount: rNumber(pr["金額"]),
     note: rRichText(pr["メモ"]),
+  };
+}
+
+export function toDuty(p: RawNotionPage): DutyAssignment {
+  const pr = p.properties;
+  return {
+    id: p.id,
+    date: rDate(pr["日付"]),
+    role: (rSelect(pr["役割"]) as DutyAssignment["role"]) ?? "その他",
+    person: rRichText(pr["担当者"]),
+    note: rRichText(pr["備考"]),
+  };
+}
+
+export function toMinutes(p: RawNotionPage): MeetingMinutes {
+  const pr = p.properties;
+  return {
+    id: p.id,
+    title: rTitle(pr["タイトル"]),
+    date: rDate(pr["日付"]),
+    attendees: rRichText(pr["出席者"]),
+    content: rRichText(pr["内容"]),
+    decisions: rRichText(pr["決定事項"]),
+  };
+}
+
+export function toChurchInfo(p: RawNotionPage): ChurchInfo {
+  const pr = p.properties;
+  return {
+    id: p.id,
+    vision: rRichText(pr["ビジョン"]),
+    history: rRichText(pr["沿革"]),
   };
 }

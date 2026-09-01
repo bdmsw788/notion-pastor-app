@@ -3,16 +3,22 @@ export type DatabaseKey =
   | "members"
   | "care"
   | "events"
+  | "duties"
   | "prayers"
-  | "offerings";
+  | "offerings"
+  | "minutes"
+  | "churchInfo";
 
 export interface DbIds {
   sermons: string | null;
   members: string | null;
   care: string | null;
   events: string | null;
+  duties: string | null;
   prayers: string | null;
   offerings: string | null;
+  minutes: string | null;
+  churchInfo: string | null;
 }
 
 export const emptyDbIds: DbIds = {
@@ -20,8 +26,11 @@ export const emptyDbIds: DbIds = {
   members: null,
   care: null,
   events: null,
+  duties: null,
   prayers: null,
   offerings: null,
+  minutes: null,
+  churchInfo: null,
 };
 
 export interface NotionPage {
@@ -48,6 +57,7 @@ export interface Member {
   contact: string;
   baptismDate: string | null;
   memberType: "正会員" | "準会員" | "求道者" | "未会員";
+  status: "順調" | "要フォロー" | "入院中" | "長期欠席" | "その他";
   note: string;
 }
 
@@ -72,6 +82,14 @@ export interface ChurchEvent {
   note: string;
 }
 
+export interface DutyAssignment {
+  id: string;
+  date: string | null;
+  role: "司会" | "奏楽" | "受付" | "音響" | "こども担当" | "清掃" | "その他";
+  person: string;
+  note: string;
+}
+
 export interface PrayerRequest {
   id: string;
   title: string;
@@ -88,4 +106,19 @@ export interface Offering {
   kind: "礼拝献金" | "十一献金" | "感謝献金" | "特別献金" | "その他";
   amount: number | null;
   note: string;
+}
+
+export interface MeetingMinutes {
+  id: string;
+  title: string;
+  date: string | null;
+  attendees: string;
+  content: string;
+  decisions: string;
+}
+
+export interface ChurchInfo {
+  id: string;
+  vision: string;
+  history: string;
 }

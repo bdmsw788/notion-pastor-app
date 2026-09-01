@@ -52,6 +52,7 @@ export function buildDemoSeed(): Record<DatabaseKey, RawNotionPage[]> {
         連絡先: pRichText("090-xxxx-xxxx"),
         洗礼日: pDate("2015-04-12"),
         会員種別: pSelect("正会員"),
+        状況: pSelect("順調"),
         備考: pRichText("聖歌隊リーダー"),
       }),
       page({
@@ -61,6 +62,7 @@ export function buildDemoSeed(): Record<DatabaseKey, RawNotionPage[]> {
         連絡先: pRichText("080-xxxx-xxxx"),
         洗礼日: pDate("2022-12-25"),
         会員種別: pSelect("正会員"),
+        状況: pSelect("順調"),
         備考: pRichText(""),
       }),
       page({
@@ -70,6 +72,7 @@ export function buildDemoSeed(): Record<DatabaseKey, RawNotionPage[]> {
         連絡先: pRichText("070-xxxx-xxxx"),
         洗礼日: pDate(null),
         会員種別: pSelect("求道者"),
+        状況: pSelect("順調"),
         備考: pRichText("先月から礼拝に参加"),
       }),
       page({
@@ -79,6 +82,7 @@ export function buildDemoSeed(): Record<DatabaseKey, RawNotionPage[]> {
         連絡先: pRichText("090-yyyy-yyyy"),
         洗礼日: pDate("2010-08-15"),
         会員種別: pSelect("正会員"),
+        状況: pSelect("入院中"),
         備考: pRichText("最近体調を崩している"),
       }),
     ],
@@ -196,6 +200,70 @@ export function buildDemoSeed(): Record<DatabaseKey, RawNotionPage[]> {
         種別: pSelect("感謝献金"),
         金額: pNumber(15000),
         メモ: pRichText("佐藤さんより"),
+      }),
+    ],
+    duties: [
+      page({
+        タイトル: pTitle(`${addDays(2)} 司会`),
+        日付: pDate(addDays(2)),
+        役割: pSelect("司会"),
+        担当者: pRichText("田中 一郎"),
+        備考: pRichText(""),
+      }),
+      page({
+        タイトル: pTitle(`${addDays(2)} 奏楽`),
+        日付: pDate(addDays(2)),
+        役割: pSelect("奏楽"),
+        担当者: pRichText("佐藤 花子"),
+        備考: pRichText(""),
+      }),
+      page({
+        タイトル: pTitle(`${addDays(2)} 受付`),
+        日付: pDate(addDays(2)),
+        役割: pSelect("受付"),
+        担当者: pRichText("鈴木 恵"),
+        備考: pRichText(""),
+      }),
+      page({
+        タイトル: pTitle(`${addDays(9)} 司会`),
+        日付: pDate(addDays(9)),
+        役割: pSelect("司会"),
+        担当者: pRichText("鈴木 恵"),
+        備考: pRichText("聖餐式あり"),
+      }),
+      page({
+        タイトル: pTitle(`${addDays(9)} 奏楽`),
+        日付: pDate(addDays(9)),
+        役割: pSelect("奏楽"),
+        担当者: pRichText("高橋 誠"),
+        備考: pRichText(""),
+      }),
+    ],
+    minutes: [
+      page({
+        タイトル: pTitle("役員会"),
+        日付: pDate(addDays(-3)),
+        出席者: pRichText("田中 一郎、佐藤 花子、牧師"),
+        内容: pRichText("秋の修養会の準備状況を確認。会場の予約は完了。プログラム案を次回までに作成。"),
+        決定事項: pRichText("修養会の参加費は3000円に決定。申込締切は" + addDays(20) + "。"),
+      }),
+      page({
+        タイトル: pTitle("礼拝委員会"),
+        日付: pDate(addDays(-10)),
+        出席者: pRichText("佐藤 花子、高橋 誠、牧師"),
+        内容: pRichText("聖餐式の準備と奉仕表の調整について話し合った。"),
+        決定事項: pRichText("聖餐式は次回礼拝で実施。"),
+      }),
+    ],
+    churchInfo: [
+      page({
+        タイトル: pTitle("教会情報"),
+        ビジョン: pRichText(
+          "地域に根ざし、一人ひとりが神の愛を経験し、次世代へと福音を伝えていく教会を目指します。"
+        ),
+        沿革: pRichText(
+          "1998年 開拓伝道として礼拝開始\n2005年 会堂建築\n2015年 子ども食堂ミニストリー開始\n2023年 オンライン礼拝配信開始"
+        ),
       }),
     ],
   };

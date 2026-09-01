@@ -31,7 +31,10 @@ export default function MembersListScreen() {
                 <View style={styles.info}>
                   <View style={styles.rowBetween}>
                     <Text style={styles.title}>{m.name || "(無名)"}</Text>
-                    <Badge label={m.memberType} />
+                    <View style={styles.badgeCol}>
+                      <Badge label={m.memberType} />
+                      {m.status !== "順調" ? <Badge label={m.status} tone="danger" /> : null}
+                    </View>
                   </View>
                   {m.family ? <Text style={styles.meta}>{m.family}</Text> : null}
                   {m.contact ? <Text style={styles.meta}>{m.contact}</Text> : null}
@@ -60,6 +63,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-start",
     gap: spacing.sm,
+  },
+  badgeCol: {
+    alignItems: "flex-end",
+    gap: 4,
   },
   title: {
     fontSize: 16,
