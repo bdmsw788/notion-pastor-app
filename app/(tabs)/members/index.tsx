@@ -20,9 +20,9 @@ export default function MembersListScreen() {
       <Screen>
         <IconHero icon="people" title="教会員" subtitle={`登録 ${data?.length ?? 0}名`} />
         {isLoading ? (
-          <EmptyState title="読み込み中..." />
+          <EmptyState title="読み込み中..." icon="hourglass-outline" />
         ) : !data || data.length === 0 ? (
-          <EmptyState title="教会員はまだ登録されていません" hint="右下の + から追加できます" />
+          <EmptyState title="教会員はまだ登録されていません" hint="右下の + から追加できます" icon="people-outline" />
         ) : (
           data.map((m) => (
             <Card key={m.id} onPress={() => router.push(`/members/${m.id}`)}>

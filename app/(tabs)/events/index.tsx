@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import { Screen } from "@/components/Screen";
 import { Card } from "@/components/Card";
 import { Badge } from "@/components/Badge";
+import { RowIcon } from "@/components/RowIcon";
 import { EmptyState } from "@/components/EmptyState";
 import { Fab } from "@/components/Fab";
 import { Hero } from "@/components/Hero";
@@ -11,6 +12,7 @@ import { SegmentedControl } from "@/components/SegmentedControl";
 import { colors, spacing } from "@/lib/theme";
 import { formatDate } from "@/lib/dateUtils";
 import { photos } from "@/lib/photos";
+import { dutyRoleIcon, eventKindIcon } from "@/lib/iconMap";
 import { useDuties, useEvents } from "@/hooks/useChurchData";
 
 type Segment = "events" | "duties";
@@ -36,35 +38,45 @@ export default function EventsListScreen() {
 
         {segment === "events" ? (
           events.isLoading ? (
-            <EmptyState title="読み込み中..." />
+            <EmptyState title="読み込み中..." icon="hourglass-outline" />
           ) : !events.data || events.data.length === 0 ? (
-            <EmptyState title="行事はまだありません" hint="右下の + から追加できます" />
+            <EmptyState title="行事はまだありません" hint="右下の + から追加できます" icon="calendar-outline" />
           ) : (
             events.data.map((e) => (
               <Card key={e.id} onPress={() => router.push(`/events/${e.id}`)}>
-                <View style={styles.rowBetween}>
-                  <Text style={styles.title}>{e.title || "(無題)"}</Text>
-                  <Badge label={e.kind} />
+                <View style={styles.row}>
+                  <RowIcon spec={eventKindIcon[e.kind]} />
+                  <View style={styles.info}>
+                    <View style={styles.rowBetween}>
+                      <Text style={styles.title}>{e.title || "(無題)"}</Text>
+                      <Badge label={e.kind} />
+                    </View>
+                    <Text style={styles.meta}>{formatDate(e.dateTime)}</Text>
+                    {e.location ? <Text style={styles.meta}>{e.location}</Text> : null}
+                    {e.servers ? <Text style={styles.meta}>奉仕: {e.servers}</Text> : null}
+                  </View>
                 </View>
-                <Text style={styles.meta}>{formatDate(e.dateTime)}</Text>
-                {e.location ? <Text style={styles.meta}>{e.location}</Text> : null}
-                {e.servers ? <Text style={styles.meta}>奉仕: {e.servers}</Text> : null}
               </Card>
             ))
           )
         ) : duties.isLoading ? (
-          <EmptyState title="読み込み中..." />
+          <EmptyState title="読み込み中..." icon="hourglass-outline" />
         ) : !duties.data || duties.data.length === 0 ? (
-          <EmptyState title="奉仕表はまだありません" hint="右下の + から追加できます" />
+          <EmptyState title="奉仕表はまだありません" hint="右下の + から追加できます" icon="people-outline" />
         ) : (
           duties.data.map((d) => (
             <Card key={d.id} onPress={() => router.push(`/events/duty/${d.id}`)}>
-              <View style={styles.rowBetween}>
-                <Text style={styles.title}>{d.person || "(未定)"}</Text>
-                <Badge label={d.role} tone="accent" />
+              <View style={styles.row}>
+                <RowIcon spec={dutyRoleIcon[d.role]} />
+                <View style={styles.info}>
+                  <View style={styles.rowBetween}>
+                    <Text style={styles.title}>{d.person || "(未定)"}</Text>
+                    <Badge label={d.role} tone="accent" />
+                  </View>
+                  <Text style={styles.meta}>{formatDate(d.date)}</Text>
+                  {d.note ? <Text style={styles.meta}>{d.note}</Text> : null}
+                </View>
               </View>
-              <Text style={styles.meta}>{formatDate(d.date)}</Text>
-              {d.note ? <Text style={styles.meta}>{d.note}</Text> : null}
             </Card>
           ))
         )}
@@ -75,6 +87,14 @@ export default function EventsListScreen() {
 }
 
 const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: spacing.sm,
+  },
+  info: {
+    flex: 1,
+  },
   rowBetween: {
     flexDirection: "row",
     justifyContent: "space-between",

@@ -9,12 +9,14 @@ import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { Badge } from "@/components/Badge";
 import { Avatar } from "@/components/Avatar";
+import { RowIcon } from "@/components/RowIcon";
 import { EmptyState } from "@/components/EmptyState";
 import { useCareLogs, useMembers } from "@/hooks/useChurchData";
 import { pDate, pRichText, pSelect, pTitle } from "@/lib/notion";
 import type { Member } from "@/lib/types";
 import { colors, spacing } from "@/lib/theme";
 import { formatDate } from "@/lib/dateUtils";
+import { careKindIcon } from "@/lib/iconMap";
 
 const TYPE_OPTIONS = ["正会員", "準会員", "求道者", "未会員"] as const;
 const STATUS_OPTIONS = ["順調", "要フォロー", "入院中", "長期欠席", "その他"] as const;
@@ -141,20 +143,25 @@ export default function MemberDetailScreen() {
             </Text>
           </View>
           {memberCareLogs.length === 0 ? (
-            <EmptyState title="牧会記録はまだありません" />
+            <EmptyState title="牧会記録はまだありません" icon="chatbubbles-outline" />
           ) : (
             memberCareLogs.map((c) => (
               <Card key={c.id} onPress={() => router.push(`/members/care/${c.id}`)}>
-                <View style={styles.rowBetween}>
-                  <Text style={styles.careKind}>{c.kind}</Text>
-                  <Badge label={c.done ? "対応済み" : "フォロー中"} tone={c.done ? "success" : "accent"} />
+                <View style={styles.careRow}>
+                  <RowIcon spec={careKindIcon[c.kind]} size={32} />
+                  <View style={styles.careInfo}>
+                    <View style={styles.rowBetween}>
+                      <Text style={styles.careKind}>{c.kind}</Text>
+                      <Badge label={c.done ? "対応済み" : "フォロー中"} tone={c.done ? "success" : "accent"} />
+                    </View>
+                    <Text style={styles.careMeta}>{formatDate(c.date)}</Text>
+                    {c.content ? (
+                      <Text style={styles.careContent} numberOfLines={2}>
+                        {c.content}
+                      </Text>
+                    ) : null}
+                  </View>
                 </View>
-                <Text style={styles.careMeta}>{formatDate(c.date)}</Text>
-                {c.content ? (
-                  <Text style={styles.careContent} numberOfLines={2}>
-                    {c.content}
-                  </Text>
-                ) : null}
               </Card>
             ))
           )}
@@ -188,6 +195,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  careRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: spacing.sm,
+  },
+  careInfo: {
+    flex: 1,
   },
   careKind: {
     fontSize: 14,
